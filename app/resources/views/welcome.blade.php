@@ -48,7 +48,7 @@
                         <h3 class="text-3xl font-black tracking-tighter">Your feedback matters.</h3>
                     </div>
 
-                    <form action="/survey" method="POST" class="space-y-8">
+                    <form action="/survey" method="POST" class="space-y-12">
                         @csrf
                         
                         <div class="group">
@@ -57,18 +57,23 @@
                                    class="w-full bg-transparent border-b-2 border-slate-100 dark:border-slate-800 px-0 py-3 focus:border-lime-400 outline-none transition-all sharp font-bold text-lg">
                         </div>
 
-                        <div>
-                            <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">Satisfaction Level</label>
-                            <div class="flex justify-between gap-3">
-                                <template x-for="i in 5">
-                                    <label class="flex-1">
-                                        <input type="radio" name="skor" :value="i" required class="hidden peer" {{ old('skor') == 5 ? 'checked' : '' }}>
-                                        <div class="cursor-pointer text-center py-4 border-2 border-slate-100 dark:border-slate-800 peer-checked:border-lime-400 peer-checked:bg-lime-50 dark:peer-checked:bg-lime-900/10 transition-all sharp group">
-                                            <span class="block text-xl font-black group-hover:scale-110 transition-transform" x-text="i"></span>
-                                        </div>
-                                    </label>
-                                </template>
-                            </div>
+                        <!-- 9 Questions -->
+                        <div class="space-y-10">
+                            @foreach($questions as $key => $question)
+                                <div>
+                                    <label class="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">{{ $loop->iteration }}. {{ $question }}</label>
+                                    <div class="flex justify-between gap-3">
+                                        <template x-for="i in 5">
+                                            <label class="flex-1">
+                                                <input type="radio" name="{{ $key }}" :value="i" required class="hidden peer" {{ old($key) == 5 ? 'checked' : '' }}>
+                                                <div class="cursor-pointer text-center py-4 border-2 border-slate-100 dark:border-slate-800 peer-checked:border-lime-400 peer-checked:bg-lime-50 dark:peer-checked:bg-lime-900/10 transition-all sharp group">
+                                                    <span class="block text-xl font-black group-hover:scale-110 transition-transform" x-text="i"></span>
+                                                </div>
+                                            </label>
+                                        </template>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
 
                         <div class="group">

@@ -38,9 +38,19 @@ class AdminController extends Controller
     {
         $stats = [
             'total' => Survey::count(),
-            'rata_rata' => Survey::avg('skor') ?? 0,
+            'rata_rata' => Survey::avg('rata_rata') ?? 0,
             'terbaru' => Survey::latest()->take(5)->get(),
-            'distribusi' => Survey::select('skor', DB::raw('count(*) as total'))->groupBy('skor')->pluck('total', 'skor')->toArray(),
+            'indikator' => [
+                'q1' => Survey::avg('q1') ?? 0,
+                'q2' => Survey::avg('q2') ?? 0,
+                'q3' => Survey::avg('q3') ?? 0,
+                'q4' => Survey::avg('q4') ?? 0,
+                'q5' => Survey::avg('q5') ?? 0,
+                'q6' => Survey::avg('q6') ?? 0,
+                'q7' => Survey::avg('q7') ?? 0,
+                'q8' => Survey::avg('q8') ?? 0,
+                'q9' => Survey::avg('q9') ?? 0,
+            ]
         ];
         return view('dashboard', compact('stats'));
     }
@@ -72,7 +82,7 @@ class AdminController extends Controller
             "Expires"             => "0"
         ];
 
-        $columns = ['ID', 'Nama', 'Skor', 'Komentar', 'Waktu'];
+        $columns = ['ID', 'Nama', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Rata-rata', 'Komentar', 'Waktu'];
 
         $callback = function() use($surveys, $columns) {
             $file = fopen('php://output', 'w');
@@ -82,7 +92,16 @@ class AdminController extends Controller
                 fputcsv($file, [
                     $survey->id,
                     $survey->nama,
-                    $survey->skor,
+                    $survey->q1,
+                    $survey->q2,
+                    $survey->q3,
+                    $survey->q4,
+                    $survey->q5,
+                    $survey->q6,
+                    $survey->q7,
+                    $survey->q8,
+                    $survey->q9,
+                    $survey->rata_rata,
                     $survey->komentar,
                     $survey->created_at
                 ]);

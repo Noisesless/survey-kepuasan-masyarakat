@@ -42,6 +42,8 @@
 - [x] **Visual Polishing (2026 Trend):** Update palette ke **Midnight Plum & Cyber Lime**.
 - [x] **Anti-Clipping Fix:** Mengunci posisi footer dan menambah padding bawah pada kontainer utama untuk mencegah tumpang tindih dengan floating dock.
 - [x] **UI Enhancement:** Tipografi lebih bold, tracking-tighter pada judul, dan animasi hover pada komponen dock.
+- [x] **SKM Indicators Update:** Refaktorisasi database dan form survey menjadi 9 indikator penilaian spesifik sesuai standar SKM Nasional.
+- [x] **Admin Analytics:** Dashboard kini menggunakan **Radar Chart** untuk menganalisis rata-rata nilai per indikator secara visual.
 
 ## 8. Panduan Standarisasi & Siklus Hidup Otomatis (SISTEM INTI)
 - **Aturan Mutlak Pengkodean:** Relative Asset Paths, Mandatory Cache-Busting, Environment Agnostic URL.

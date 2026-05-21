@@ -18,12 +18,10 @@ class SurveyController extends Controller
         $bgColor = imagecolorallocate($image, 255, 255, 255);
         imagefill($image, 0, 0, $bgColor);
 
-        // High contrast colors
         $colors = [
-            imagecolorallocate($image, 220, 20, 60), // Crimson
-            imagecolorallocate($image, 0, 100, 0),  // Dark Green
-            imagecolorallocate($image, 0, 0, 139),  // Dark Blue
-            imagecolorallocate($image, 139, 0, 139), // Dark Magenta
+            imagecolorallocate($image, 30, 27, 75), // Midnight Plum
+            imagecolorallocate($image, 0, 100, 0),
+            imagecolorallocate($image, 0, 0, 139),
         ];
 
         for ($i = 0; $i < 5; $i++) {
@@ -40,30 +38,42 @@ class SurveyController extends Controller
     public function index()
     {
         $appName = Setting::where('key', 'app_name')->first()->value ?? config('app.name');
-        return view('welcome', compact('appName'));
+        $questions = [
+            'q1' => 'Kesesuaian persyaratan pelayanan',
+            'q2' => 'Kemudahan prosedur',
+            'q3' => 'Kecepatan waktu pelayanan',
+            'q4' => 'Kewajaran biaya/tarif',
+            'q5' => 'Kesesuaian hasil layanan',
+            'q6' => 'Kompetensi petugas',
+            'q7' => 'Perilaku petugas',
+            'q8' => 'Penanganan pengaduan',
+            'q9' => 'Sarana dan prasarana',
+        ];
+        return view('welcome', compact('appName', 'questions'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'nama' => 'required|string|max:255',
-            'skor' => 'required|integer|min:1|max:5',
             'komentar' => 'nullable|string',
             'captcha' => 'required'
-        ]);
+        ];
+        for($i=1; $i<=9; $i++) $rules["q$i"] = 'required|integer|min:1|max:5';
 
-        // Simple Case-Insensitive Captcha Check (Dummy for now, will implement session-based later)
+        $request->validate($rules);
+
         if (strtolower($request->captcha) !== strtolower(session('captcha_code'))) {
             return back()->with('error', 'Captcha salah!')->withInput();
         }
 
         DB::beginTransaction();
         try {
-            Survey::create([
-                'nama' => $request->nama,
-                'skor' => $request->skor,
-                'komentar' => $request->komentar,
-            ]);
+            $data = $request->only(['nama', 'komentar', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']);
+            $avg = ($data['q1'] + $data['q2'] + $data['q3'] + $data['q4'] + $data['q5'] + $data['q6'] + $data['q7'] + $data['q8'] + $data['q9']) / 9;
+            $data['rata_rata'] = round($avg, 2);
+            
+            Survey::create($data);
             DB::commit();
             return redirect('/')->with('success', 'Terima kasih atas penilaian Anda!');
         } catch (\Exception $e) {
