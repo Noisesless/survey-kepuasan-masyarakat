@@ -8,7 +8,7 @@
 - **Developer:** Gemini CLI
 - **Email:** -
 - **Lisensi:** MIT
-- **Repository Utama:** Lokal (C:\XAMPP\htdocs\skm)
+- **Repository Utama:** https://github.com/Noisesless/survey-kepuasan-masyarakat.git
 - **Timestamp Akhir:** 2026-05-21 10:15 AM
 - **Kondisi Kompilasi:** SUCCESS / PRODUCTION READY
 - **Status 5 Lapisan Scan:** [Linter: PASSED | Type-Safety: PASSED | SAST: CLEAN | Input Guard: SECURED | Auth Integrity: VERIFIED]
