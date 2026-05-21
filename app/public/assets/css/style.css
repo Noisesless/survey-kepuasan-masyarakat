@@ -1,88 +1,66 @@
 :root {
-    /* 2026 Trend: Tech Noir / Midnight Plum Base with Cyber Lime Accent */
-    --primary: #d9f99d; /* Cyber Lime */
-    --primary-hover: #bef264;
-    --bg-light: #fdfcfe; /* Restorative Neutral */
-    --bg-dark: #0f1014; /* Ink Obsidian */
-    --text-light: #f1f5f9;
-    --text-dark: #1e1b4b; /* Midnight Plum Dark */
-    --accent: #d9f99d;
-    --success: #4ade80;
-    --warning: #fbbf24;
-    --danger: #f87171;
+    /* Vibrant Pop Palette */
+    --amber-gold: #ffbe0b;
+    --blaze-orange: #fb5607;
+    --neon-pink: #ff006e;
+    --blue-violet: #8338ec;
+    --azure-blue: #3a86ff;
+
+    --primary: var(--blue-violet);
+    --bg-white: #f7f7fb; /* Soft Off-White */
+    --text-main: #00183e;
 }
 
-@font-face {
-    font-family: 'Inter';
-    src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-}
+/* 
+   Note: Since Coolvetica and Lemon Milk are not standard Google Fonts, 
+   we prioritize Inter/Montserrat with heavy weights as hyper-modern fallbacks 
+   and use specific classes to represent them.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Inter:wght@400;700;900&display=swap');
 
 body {
     font-family: 'Inter', sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
+    background-color: var(--bg-white);
+    color: var(--text-main);
+    transition: all 0.5s ease;
+    overflow-x: hidden;
 }
 
-/* Typography Hierarchy */
-h1 { font-size: 24px; font-weight: 700; color: var(--text-dark); }
-h2 { font-size: 20px; font-weight: 600; }
-body { font-size: 16px; font-weight: 400; }
+/* Hyper-Modern Headings (Lemon Milk Vibe) */
+.font-lemon {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
 
-/* Sharp Corner Standard */
+/* Hyper-Modern Titles (Coolvetica Vibe) */
+.font-cool {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.85;
+}
+
+h1 { font-size: clamp(3rem, 10vw, 8rem); }
+h2 { font-size: clamp(1.5rem, 5vw, 3rem); }
+
+/* Hyper-Modern Elevation (Soft & Wide) */
+.hyper-shadow {
+    box-shadow: 0 30px 60px -12px rgba(0, 24, 62, 0.12), 0 18px 36px -18px rgba(0, 0, 0, 0.15);
+}
+
 .sharp { border-radius: 0px !important; }
 
-/* Shadow System - Restorative Glow */
-.soft-shadow {
-    box-shadow: 0 4px 20px -5px rgba(30, 27, 75, 0.1);
-    transition: all 0.3s ease-in-out;
-}
-.soft-shadow:hover {
-    box-shadow: 0 20px 40px -10px rgba(30, 27, 75, 0.2);
-    transform: translateY(-2px);
+/* Grid Background */
+.bg-grid {
+    background-image: radial-gradient(rgba(131, 56, 236, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
 }
 
-/* Core Utility Engine */
-.flex-center { display: flex; align-items: center; justify-content: center; }
-.grid-cols-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-
-/* Responsive Media Queries */
-@media (max-width: 768px) {
-    .mobile-hide { display: none; }
-    .w-full-mobile { width: 100%; }
+/* Image Hover Scale */
+.img-zoom {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-@media (min-width: 1024px) {
-    .container { max-width: 1024px; margin: auto; }
-}
-
-/* Dark Mode Overrides - Tech Noir */
-.dark body {
-    background-color: var(--bg-dark);
-    color: var(--text-light);
-}
-.dark .bg-card {
-    background-color: #1a1c23;
-    color: #f1f5f9;
-    border: 1px solid rgba(217, 249, 157, 0.1);
-}
-.dark h1, .dark h2 { color: var(--text-light); }
-
-/* Back to Top Button */
-#backToTop {
-    position: fixed;
-    bottom: 100px; /* Increased to avoid floating dock */
-    right: 30px;
-    z-index: 99;
-    display: none;
-}
-
-/* Navigation - Anti-Clipping Lock */
-nav.floating-dock {
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(30, 27, 75, 0.1);
-}
-.dark nav.floating-dock {
-    background-color: rgba(15, 16, 20, 0.8) !important;
-    border: 1px solid rgba(217, 249, 157, 0.2);
+.img-zoom:hover {
+    transform: scale(1.05);
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" :class="{ 'dark': darkMode }">
+<html lang="id" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,97 +19,128 @@
 
     <style>
         [x-cloak] { display: none !important; }
+        
+        /* Simulated Lemon Milk */
+        .font-lemon {
+            font-family: 'Montserrat', sans-serif !important;
+            font-weight: 900 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.15em !important;
+        }
+
+        /* Simulated Coolvetica */
+        .font-cool {
+            font-family: 'Inter', sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.06em !important;
+            line-height: 0.8 !important;
+        }
+
+        .bg-vibrant-gradient {
+            background: linear-gradient(135deg, #8338ec 0%, #3a86ff 100%);
+        }
     </style>
 </head>
-<body class="bg-[#fdfcfe] text-[#1e1b4b] transition-colors duration-300">
+<body class="bg-[#f7f7fb] text-[#00183e] transition-colors duration-500 overflow-x-hidden selection:bg-[#ff006e] selection:text-white">
 
     <!-- Toast Notification Container -->
-    <div x-data="toastContainer()" @toast.window="addToast($event.detail)" class="fixed top-4 right-4 z-[1000] flex flex-col gap-2">
+    <div x-data="toastContainer()" @toast.window="addToast($event.detail)" class="fixed top-8 right-8 z-[1000] flex flex-col gap-4">
         <template x-for="toast in toasts" :key="toast.id">
             <div x-show="toast.visible" 
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0 translate-x-8"
-                 x-transition:enter-end="opacity-100 translate-x-0"
+                 x-transition:enter="transition cubic-bezier(0.34, 1.56, 0.64, 1) duration-500"
+                 x-transition:enter-start="opacity-0 scale-50 translate-x-20"
+                 x-transition:enter-end="opacity-100 scale-100 translate-x-0"
                  x-transition:leave="transition ease-in duration-200"
-                 x-transition:leave-start="opacity-100 translate-x-0"
-                 x-transition:leave-end="opacity-0 translate-x-8"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-50 translate-x-20"
                  :class="{
-                    'bg-[#1e1b4b] dark:bg-[#d9f99d] dark:text-[#0f1014]': toast.type === 'success',
-                    'bg-[#f87171]': toast.type === 'error',
-                    'bg-[#fbbf24]': toast.type === 'warning'
+                    'bg-[#8338ec]': toast.type === 'success',
+                    'bg-[#ff006e]': toast.type === 'error',
+                    'bg-[#ffbe0b] text-[#352700]': toast.type === 'warning'
                  }"
-                 class="px-6 py-3 text-white soft-shadow flex items-center gap-3 sharp min-w-[250px] border border-white/10">
-                <i :data-lucide="toast.icon" class="w-5 h-5"></i>
-                <span x-text="toast.message" class="text-sm font-bold tracking-tight"></span>
+                 class="px-10 py-6 hyper-shadow flex items-center gap-6 sharp border-4 border-[#00183e] text-white">
+                <i :data-lucide="toast.icon" class="w-8 h-8"></i>
+                <span x-text="toast.message" class="text-lg font-black uppercase tracking-tight"></span>
             </div>
         </template>
     </div>
 
-    <!-- Floating Dock Menu (With Auto-Hide on Footer) -->
-    <div x-data="{ 
-            hideDock: false,
-            init() {
-                const observer = new IntersectionObserver((entries) => {
-                    this.hideDock = entries[0].isIntersecting;
-                }, { threshold: 0.1 });
-                observer.observe(document.getElementById('main-footer'));
-            }
-         }">
-        <nav x-show="!hideDock"
+    <!-- Hyper-Modern Navigation (Circular Top-Left) -->
+    <div x-data="{ open: false }"
+         class="fixed top-8 left-8 z-[600]">
+        
+        <!-- Trigger Button -->
+        <button @click="open = !open"
+                class="w-20 h-20 bg-white border-[6px] border-[#00183e] rounded-full flex-center shadow-[8px_8px_0px_#00183e] hover:rotate-180 transition-transform duration-500">
+            <i data-lucide="menu" class="w-8 h-8 text-[#00183e]"></i>
+        </button>
+
+        <!-- Circular Menu Panel (Rounded) -->
+        <div x-show="open" 
+             x-cloak
              x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-20"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             x-transition:leave="transition ease-in duration-300"
-             x-transition:leave-start="opacity-100 translate-y-0"
-             x-transition:leave-end="opacity-0 translate-y-20"
-             class="floating-dock fixed bottom-8 left-1/2 -translate-x-1/2 z-[500] flex items-center bg-[#1e1b4b]/90 dark:bg-[#0f1014]/90 backdrop-blur-2xl px-3 py-2 soft-shadow sharp border border-[#d9f99d]/20">
+             x-transition:enter-start="opacity-0 scale-50"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-50"
+             class="absolute top-24 left-0 w-64 bg-white border-[6px] border-[#00183e] rounded-[32px] shadow-[15px_15px_0px_#8338ec] p-6 flex flex-col gap-2">
             
-            <a href="/" class="p-3 text-[#d9f99d]/60 hover:text-[#d9f99d] transition-all flex flex-col items-center gap-1 group">
-                <i data-lucide="home" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
-                <span class="text-[9px] uppercase font-black tracking-widest">Home</span>
+            <a href="/" class="p-4 text-[#00183e] hover:bg-[#ffbe0b] rounded-2xl hover:font-black transition-all flex items-center gap-4 group">
+                <i data-lucide="home" class="w-6 h-6"></i>
+                <span class="font-lemon text-xs">BERANDA</span>
             </a>
             
-            <div class="w-px h-6 bg-white/10 mx-2"></div>
-
             @auth
-                <a href="/dashboard" class="p-3 text-[#d9f99d]/60 hover:text-[#d9f99d] transition-all flex flex-col items-center gap-1 group">
-                    <i data-lucide="layout-dashboard" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
-                    <span class="text-[9px] uppercase font-black tracking-widest">Admin</span>
+                <a href="/dashboard" class="p-4 text-[#00183e] hover:bg-[#3a86ff] hover:text-white rounded-2xl transition-all flex items-center gap-4 group">
+                    <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+                    <span class="font-lemon text-xs">DASHBOARD</span>
                 </a>
-                <form action="/logout" method="POST" class="inline">
+                <form action="/logout" method="POST" class="w-full">
                     @csrf
-                    <button type="submit" class="p-3 text-[#d9f99d]/60 hover:text-red-400 transition-all flex flex-col items-center gap-1 group">
-                        <i data-lucide="log-out" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
-                        <span class="text-[9px] uppercase font-black tracking-widest">Logout</span>
+                    <button type="submit" class="w-full p-4 text-[#00183e] hover:bg-[#ff006e] hover:text-white rounded-2xl transition-all flex items-center gap-4 group">
+                        <i data-lucide="log-out" class="w-6 h-6"></i>
+                        <span class="font-lemon text-xs">EXIT</span>
                     </button>
                 </form>
             @else
-                <a href="/login" class="p-3 text-[#d9f99d]/60 hover:text-[#d9f99d] transition-all flex flex-col items-center gap-1 group">
-                    <i data-lucide="log-in" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
-                    <span class="text-[9px] uppercase font-black tracking-widest">Login</span>
+                <a href="/login" class="p-4 text-[#00183e] hover:bg-[#3a86ff] hover:text-white rounded-2xl transition-all flex items-center gap-4 group">
+                    <i data-lucide="log-in" class="w-6 h-6"></i>
+                    <span class="font-lemon text-xs">LOGIN</span>
                 </a>
             @endauth
-
-            <div class="w-px h-6 bg-white/10 mx-2"></div>
-
-            <button @click="darkMode = !darkMode; localStorage.setItem('darkMode', darkMode)" class="p-3 text-[#d9f99d]/60 hover:text-[#d9f99d] transition-all flex flex-col items-center gap-1 group">
-                <i :data-lucide="darkMode ? 'sun' : 'moon'" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
-                <span x-text="darkMode ? 'Light' : 'Dark'" class="text-[9px] uppercase font-black tracking-widest"></span>
-            </button>
-        </nav>
+        </div>
     </div>
 
-    <!-- Content Area -->
-    <main class="min-h-screen pb-20">
+    <!-- Floating Back to Top (Circle) -->
+    <button x-data="{ show: false }" 
+            @scroll.window="show = window.pageYOffset > 500"
+            x-show="show"
+            x-cloak
+            x-transition
+            @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            class="fixed bottom-10 right-10 w-16 h-16 bg-[#ff006e] rounded-full flex-center border-4 border-[#00183e] shadow-[6px_6px_0px_#00183e] z-[500] hover:scale-110 transition-transform">
+        <i data-lucide="arrow-up" class="w-8 h-8 text-white"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main class="min-h-screen">
         {{ $slot }}
     </main>
 
-    <!-- Simple Footer (Observation Target) -->
-    <footer id="main-footer" class="bg-[#1e1b4b] dark:bg-[#0f1014] py-16 border-t border-white/5 text-center relative z-10">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="w-12 h-1 bg-[#d9f99d] mx-auto mb-8"></div>
-            <p class="text-[10px] uppercase font-black tracking-[0.4em] text-[#d9f99d]/40 mb-3">Core Infrastructure</p>
-            <p class="text-xs text-white/60">&copy; {{ date('Y') }} {{ config('app.name', 'Survey Kepuasan') }}. Powered by Tech Noir Protocol.</p>
+    <!-- Hyper-Modern Footer -->
+    <footer id="main-footer" class="bg-[#00183e] py-32 text-center relative z-10 overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <h1 class="font-cool text-[20vw] text-white whitespace-nowrap -translate-x-1/4">SISTEM SURVEY • SISTEM SURVEY • </h1>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 relative z-20">
+            <div class="flex justify-center gap-8 mb-16">
+                <div class="w-20 h-20 bg-[#ff006e] sharp border-4 border-white shadow-[10px_10px_0px_#8338ec] rotate-3 hover:rotate-0 transition-transform"></div>
+                <div class="w-20 h-20 bg-[#ffbe0b] sharp border-4 border-white shadow-[10px_10px_0px_#fb5607] -rotate-6 hover:rotate-0 transition-transform"></div>
+                <div class="w-20 h-20 bg-[#3a86ff] sharp border-4 border-white shadow-[10px_10px_0px_#ff006e] rotate-12 hover:rotate-0 transition-transform"></div>
+            </div>
+            <p class="font-lemon text-xl tracking-[0.6em] text-[#ffbe0b] mb-6">INTEGRITAS LAYANAN PUBLIK</p>
+            <p class="text-lg font-bold text-white/40">&copy; {{ date('Y') }} {{ config('app.name', 'Survey Kepuasan') }}. Built with Hyper-Modern Architecture.</p>
         </div>
     </footer>
 
@@ -137,10 +168,9 @@
                             this.toasts[index].visible = false;
                             setTimeout(() => {
                                 this.toasts = this.toasts.filter(t => t.id !== id);
-                            }, 300);
+                            }, 500);
                         }
-                    }, 3000);
-                    // Re-run lucide for new icons
+                    }, 4000);
                     setTimeout(() => lucide.createIcons(), 50);
                 }
             };
