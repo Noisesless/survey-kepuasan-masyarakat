@@ -1,0 +1,52 @@
+# 📊 Konsep Aplikasi Survey Kepuasan Masyarakat (Portable)
+
+## 📋 Ringkasan
+Aplikasi web sederhana untuk mengukur kepuasan masyarakat terhadap layanan publik/instansi. Dibangun dengan **Laravel + Blade + Alpine.js**, dirancang **portabel** sehingga cukup **copy-paste folder** ke PC lain dan klik launcher untuk langsung berjalan **tanpa instalasi PHP, MySQL, atau web server tambahan**.
+
+---
+
+## 🏗️ Arsitektur & Tech Stack
+
+| Komponen       | Teknologi                          | Keterangan                                  |
+|----------------|------------------------------------|---------------------------------------------|
+| Backend        | Laravel 10/11                      | Routing, Validasi, Eloquent ORM, Middleware |
+| Frontend       | Blade + Alpine.js (CDN)            | UI interaktif ringan, tanpa build step      |
+| Database       | SQLite                             | File-based, zero-config, portable           |
+| Web Server     | PHP Built-in Server (`php -S`)     | Sudah include di binary PHP                 |
+| Styling        | TailwindCSS (CDN)                  | Tidak perlu compile, responsive             |
+| Distribusi     | Folder + Launcher Script           | Siap pakai di Windows/macOS/Linux           |
+
+---
+
+## 📁 Struktur Folder Portable
+SurveyKepuasanPortable/
+├── php/ # Binary PHP 8.2+ + ext/ + php.ini
+├── app/ # Root Laravel (sudah composer install)
+│ ├── config/
+│ ├── routes/
+│ ├── resources/views/ # Blade + Alpine.js
+│ ├── app/Models/ # Eloquent Models
+│ └── ...
+├── database/
+│ └── survey.sqlite # Database utama (auto-generate)
+├── storage/ # Logs, cache, framework files
+├── public/ # Entry point (di-link ke app/public)
+├── .env # Konfigurasi relative
+├── run.bat # Launcher Windows
+├── run.sh # Launcher Linux/macOS
+└── README.md # Panduan penggunaan
+--
+
+## 🔧 Mekanisme Portabilitas (Tanpa Install)
+
+1. **PHP Portable**: Binary PHP resmi dibundel dalam folder `php/`. Tidak perlu install di OS.
+2. **SQLite**: Driver default Laravel mendukung SQLite. Database tersimpan sebagai 1 file `.sqlite`.
+3. **Relative Path**: Semua path dikonfigurasi relatif terhadap `__DIR__` atau `base_path()`.
+4. **Auto-Setup**: Launcher script otomatis:
+   - Menambahkan `php/` ke `PATH`
+   - Generate `APP_KEY` jika belum ada
+   - Jalankan `migrate` & `storage:link`
+   - Start built-in server di `http://127.0.0.1:8080`
+   - Buka browser otomatis
+
+---

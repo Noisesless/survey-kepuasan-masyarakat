@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+vendor/
+.pnpm-store/
+
+# Environment Variables
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Project-specific
+/.scratchpad/
+storage/framework/cache/
+storage/framework/views/
+storage/framework/sessions/
+*.suo
+*.ntvs*
+.idea/
+.vscode/
