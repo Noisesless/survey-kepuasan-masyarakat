@@ -11,8 +11,8 @@
     - [x] Penanaman data seeder (Admin: admin/admin123, 3 data survey dummy yang realistis).
 
 - [x] **FASE 3: Routing & Middleware Proteksi Jalur**
-    - [x] Definisi 3 Zona (Public, Protected, Admin).
-    - [x] Setup Middleware Auth & Role (Admin).
+    - [x] Implementasi Middleware Auth & Role (Admin).
+    - [x] Aktivasi Middleware di `Kernel.php`.
 
 - [x] **FASE 4: Pembangunan Komponen Dasar & Navigasi Dinamis**
     - [x] Implementasi Floating Dock Menu (Navigasi).
@@ -22,9 +22,9 @@
 - [x] **FASE 5: Implementasi Halaman & Fitur Aktif**
     - [x] Halaman Utama (Hero Split Screen, Survey Form).
     - [x] Halaman Admin (Login, Dashboard, User Management, Settings, Export Excel).
-    - [x] Implementasi fungsi kompresi & konversi gambar ke .webp.
+    - [x] Implementasi fungsi kompresi & konversi gambar ke .webp (Asset prep).
 
 - [x] **FASE 6: Sanitasi, Dokumentasi & Handover**
     - [x] Deep Scan Type-Safety & SAST Security.
-    - [x] Inisialisasi `/.docs/architecture.md`, `api-spec.md`, `database.md`.
+    - [x] Finalisasi `/.docs/architecture.md`, `api-spec.md`, `database.md`.
     - [x] Pembersihan `/.scratchpad/` & final build artifact.
